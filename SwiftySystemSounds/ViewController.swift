@@ -66,6 +66,8 @@ class ViewController: UITableViewController {
 				}
 			}
 		}
+
+		infos = infos.sorted(by: {$0.0.name < $0.1.name})
 		
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 	}
@@ -138,7 +140,7 @@ class ViewController: UITableViewController {
 		formatter.allowedUnits = ByteCountFormatter.Units.useKB
 		formatter.countStyle = ByteCountFormatter.CountStyle.file
 		
-		for ssi in infos.sorted(by: {$0.0.name < $0.1.name}) {
+		for ssi in infos {
 			let formattedSize = formatter.string(fromByteCount: Int64(ssi.size))
 			print("| \(ssi.name) | \(formattedSize) |")
 		}
