@@ -97,9 +97,9 @@ class ViewController: UITableViewController {
 		formatter.allowedUnits = ByteCountFormatter.Units.useKB
 		formatter.countStyle = ByteCountFormatter.CountStyle.file
 		
-		let formatedSize = formatter.string(fromByteCount: Int64(ssi.size))
+		let formattedSize = formatter.string(fromByteCount: Int64(ssi.size))
 		
-		cell.textLabel?.text = "\(ssi.name) (\(formatedSize))"
+		cell.textLabel?.text = "\(ssi.name) (\(formattedSize))"
 		return cell
 	}
 	
@@ -127,7 +127,21 @@ class ViewController: UITableViewController {
 		let ac = UIAlertController(title: "Saved to Documents dir", message: "Use Xcode -> Window -> Devices (⇧⌘2) -> Installed Apps -> Download container... to copy the files to your computer", preferredStyle: .alert)
 		ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
 		present(ac, animated: true, completion: nil)
+	}
+	
+	/// Used to create the list of system sounds in README.md
+	func printAll() {
+		print("| Name | Size |")
+		print("| --- | --- |")
 		
+		let formatter = ByteCountFormatter()
+		formatter.allowedUnits = ByteCountFormatter.Units.useKB
+		formatter.countStyle = ByteCountFormatter.CountStyle.file
+		
+		for ssi in infos.sorted(by: {$0.0.name < $0.1.name}) {
+			let formattedSize = formatter.string(fromByteCount: Int64(ssi.size))
+			print("| \(ssi.name) | \(formattedSize) |")
+		}
 	}
 }
 
