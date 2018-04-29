@@ -55,7 +55,7 @@ class ViewController: UITableViewController {
 		
 		while let fileUrl = enu.nextObject() as? URL {
 			if fm.isDirectory(url: fileUrl) == false {
-				let name = fileUrl.path.substring(from: fileUrl.path.index(fileUrl.path.startIndex, offsetBy: 31))
+				let name = String(fileUrl.path[fileUrl.path.index(fileUrl.path.startIndex, offsetBy: 31)...])
 				
 				do {
 					//					let size = try! Data(contentsOf: fileUrl).count
@@ -67,7 +67,7 @@ class ViewController: UITableViewController {
 			}
 		}
 
-		infos = infos.sorted(by: {$0.0.name < $0.1.name})
+		infos = infos.sorted(by: {$0.name < $1.name})
 		
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 	}
@@ -123,7 +123,7 @@ class ViewController: UITableViewController {
 	
 	// MARK: - 🔴🔴🔴🔴🔴 targets 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
 	
-	func persist(sender:UIBarButtonItem) {
+	@objc func persist(sender:UIBarButtonItem) {
 		persist()
 		
 		let ac = UIAlertController(title: "Saved to Documents dir", message: "Use Xcode -> Window -> Devices (⇧⌘2) -> Installed Apps -> Download container... to copy the files to your computer", preferredStyle: .alert)
