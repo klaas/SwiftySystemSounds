@@ -28,8 +28,11 @@ struct SystemSoundInfo {
 
 class ViewController: UITableViewController {
 	
-	var infos:[SystemSoundInfo] = []
-	
+	var infos: [SystemSoundInfo] = []
+    var filteredInfos: [SystemSoundInfo] = []
+
+    let searchController = UISearchController(searchResultsController: nil)
+
 	// MARK: - 🔴🔴🔴🔴🔴 init 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
 	
 	init() {
@@ -69,15 +72,21 @@ class ViewController: UITableViewController {
 
 		infos = infos.sorted(by: {$0.name < $1.name})
 		
-		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-	}
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+
+        searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = false
+        tableView.tableHeaderView = searchController.searchBar
+        filteredInfos = infos
+    }
 	
 	// MARK: - 🔴🔴🔴🔴🔴 UITableViewDelegate 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
 		
-		let ssi = infos[indexPath.item]
+		let ssi = filteredInfos[indexPath.item]
 		
 		var soundID:SystemSoundID = 0
 		AudioServicesCreateSystemSoundID(ssi.url as CFURL, &soundID)
@@ -87,13 +96,13 @@ class ViewController: UITableViewController {
 	// MARK: - 🔴🔴🔴🔴🔴 UITableViewDataSource 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return infos.count
+		return filteredInfos.count
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 		
-		let ssi = infos[indexPath.item]
+		let ssi = filteredInfos[indexPath.item]
 		
 		let formatter = ByteCountFormatter()
 		formatter.allowedUnits = ByteCountFormatter.Units.useKB
@@ -110,7 +119,7 @@ class ViewController: UITableViewController {
 	func persist() {
 		let destBaseUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last!
 		
-		for ssi in infos {
+		for ssi in filteredInfos {
 			let data = try! Data(contentsOf: ssi.url)
 			let destFileUrl = destBaseUrl.appendingPathComponent(ssi.name)
 			
@@ -145,5 +154,20 @@ class ViewController: UITableViewController {
 			print("| \(ssi.name) | \(formattedSize) |")
 		}
 	}
+}
+
+// MARK: - Search Results Delegate
+extension ViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text, !searchText.isEmpty {
+            filteredInfos = infos.filter({ (info) in
+                return info.name.lowercased().contains(searchText.lowercased())
+            })
+        } else {
+            filteredInfos = infos
+        }
+
+        tableView.reloadData()
+    }
 }
 
