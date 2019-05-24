@@ -1,4 +1,4 @@
-# SwiftySystemSounds
+# SwiftySystemSounds [![Swift 5](https://img.shields.io/badge/swift-5-orange.svg?style=flat)](https://developer.apple.com/swift/) [![Platforms](https://img.shields.io/badge/platform-iOS-lightgrey.svg?style=flat)](https://developer.apple.com/swift/)
 Lists, plays and extracts the system sounds on iOS.
 
 Based on `AudioServicesCreateSystemSoundID` and `AudioServicesPlaySystemSound` of the `AudioToolbox.framework`
@@ -6,6 +6,7 @@ Based on `AudioServicesCreateSystemSoundID` and `AudioServicesPlaySystemSound` o
 Thanks to [TUNER88/iOSSystemSoundsLibrary](https://github.com/TUNER88/iOSSystemSoundsLibrary) for providing the idea and the Objective-C version.
 
 # Functionality:
+
 * List all available system sounds on the device
 * Does not work on the Simulator
 * Can save the sound files to the Documents folder of the app
@@ -290,37 +291,3 @@ Thanks to [TUNER88/iOSSystemSoundsLibrary](https://github.com/TUNER88/iOSSystemS
 
 
 Furthermore, a list of system sound IDs can be found [here](http://iphonedevwiki.net/index.php/AudioServices).
-
-
-# Diff to iOS 11.0 beta (15A5318g)
-
-### Added:
-
-| Name | Size |
-| --- | --- |
-| engage_power.caf | 940 KB |
-| nano/Alert_ActivityFriendsGoalAttained_Haptic.caf | 160 KB |
-| nano/Alert_SpartanConnected_LowLatency_Haptic.caf | 32 KB |
-| nano/Alert_SpartanConnecting_Haptic.caf | 32 KB |
-| nano/Alert_SpartanConnecting_LowLatency_Haptic.caf | 32 KB |
-| nano/Alert_SpartanDisconnected_LowLatency_Haptic.caf | 32 KB |
-| nano/jbl_begin.caf | 64 KB |
-| nano/jbl_cancel.caf | 81 KB |
-| nano/jbl_confirm.caf | 59 KB |
-
-### Removed:
-
-| Name | Size |
-| --- | --- |
-| Modern/airdrop_invite.caf | 103 KB |
-| Modern/calendar_alert_chord.caf | 351 KB |
-| Modern/sms_alert_aurora.caf | 392 KB |
-| Modern/sms_alert_bamboo.caf | 83 KB |
-| Modern/sms_alert_circles.caf | 427 KB |
-| Modern/sms_alert_complete.caf | 83 KB |
-| Modern/sms_alert_hello.caf | 136 KB |
-| Modern/sms_alert_input.caf | 216 KB |
-| Modern/sms_alert_keys.caf | 251 KB |
-| Modern/sms_alert_note.caf | 392 KB |
-| Modern/sms_alert_popcorn.caf | 163 KB |
-| Modern/sms_alert_synth.caf | 110 KB |
