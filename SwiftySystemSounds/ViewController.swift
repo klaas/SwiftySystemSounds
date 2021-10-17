@@ -89,7 +89,6 @@ class ViewController: UITableViewController {
 
 		searchController.searchResultsUpdater = self
 		searchController.hidesNavigationBarDuringPresentation = false
-		searchController.dimsBackgroundDuringPresentation = false
 		tableView.tableHeaderView = searchController.searchBar
 		filteredInfos = ssm.infos
 	}
