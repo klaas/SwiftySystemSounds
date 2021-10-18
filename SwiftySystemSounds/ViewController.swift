@@ -104,8 +104,8 @@ class ViewController: UITableViewController {
 		AudioServicesCreateSystemSoundID(ssi.url as CFURL, &soundID)
 
 		print("Playing soundID \(soundID)")
-
-		AudioServicesPlayAlertSound(soundID)
+		
+		AudioServicesPlaySystemSound(soundID)
 	}
 
 	// MARK: - 🔴🔴🔴🔴🔴 UITableViewDataSource 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
